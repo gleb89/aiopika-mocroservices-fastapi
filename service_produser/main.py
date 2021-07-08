@@ -4,10 +4,10 @@ from aio_pika import connect, Message
 
 from fastapi import FastAPI
 
-app = FastAPI(openapi_url="/fast/openapi.json", docs_url="/fast/docs")
+app = FastAPI(openapi_url="/service_produser/openapi.json", docs_url="/service_produser/docs")
 
 
-@app.get('/fast')
+@app.get('/service_produser')
 def hh():
     return 'fast'
 
@@ -30,10 +30,14 @@ async def main(y):
 
     await connection.close()
 
-@app.get("/fast/tt")
-async def read_root(y:str):
-    await main(y)
+@app.get("/service_produser/tt")
+async def read_root(id_for_consumer:str):
+    await main(id_for_consumer)
     return {"Hello": "World"}
+
+
+
+
 
 
 
