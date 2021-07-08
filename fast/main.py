@@ -2,11 +2,19 @@
 import asyncio
 from aio_pika import connect, Message
 
+from fastapi import FastAPI
 
-async def main(loop):
+app = FastAPI(openapi_url="/fast/openapi.json", docs_url="/fast/docs")
+
+
+@app.get('/fast')
+def hh():
+    return 'fast'
+
+async def main(y):
     # Perform connection
     connection = await connect(
-        "amqp://guest:guest@localhost/", loop=loop
+        "amqp://user:bitnami@rabbit/"
     )
 
     # Creating a channel
@@ -14,7 +22,7 @@ async def main(loop):
 
     # Sending the message
     await channel.default_exchange.publish(
-        Message(b"Hello World!"),
+        Message(str(y).encode("utf-8")),
         routing_key="hello",
     )
 
@@ -22,7 +30,10 @@ async def main(loop):
 
     await connection.close()
 
+@app.get("/fast/tt")
+async def read_root(y:str):
+    await main(y)
+    return {"Hello": "World"}
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main(loop))
+
+

@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  fast:
+    restart: always
+    build: ./fast
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    depends_on:
+      - rabbit
+    restart: on-failure
+    networks:
+      - back
+
+  listen:
+    restart: always
+    build: ./listen
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8001
+    depends_on:
+      - rabbit
+    restart: on-failure
+    networks:
+        - back
+
+  nginx:
+    image: nginx:1.17
+    restart: unless-stopped
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+    depends_on: 
+      - fast
+      - listen
+    networks:
+      - back
+    ports:
+      - "8080:8080"
+      - "443:443"
+
+  rabbit:
+    image: "bitnami/rabbitmq:3.7"
+    ports:
+      - "4369:4369"
+      - "5672:5672"
+      - "25672:25672"
+      - "15672:15672"
+    # volumes:
+    #   - "rabbit_data:/bitnami"
+    networks:
+      - back
+
+  consumer:
+    build: ./cons
+    command: python cons.py
+    restart: on-failure
+    depends_on: 
+      - rabbit
+    networks:
+      - back
+
+networks:
+  back:
+    driver: bridge

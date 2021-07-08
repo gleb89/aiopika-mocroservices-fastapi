@@ -1,23 +1,15 @@
-
 import asyncio
 from aio_pika import connect, IncomingMessage
 
 
 async def on_message(message: IncomingMessage):
-    """
-    on_message doesn't necessarily have to be defined as async.
-    Here it is to show that it's possible.
-    """
-    txt = message.body.decode("utf-8")
-    print(txt)
-    await asyncio.sleep(1)  # Represents async I/O operations
-    print("After sleep!")
+    message.body.decode('utf-8')
 
 
 async def main(loop):
     # Perform connection
     connection = await connect(
-        "amqp://guest:guest@localhost/", loop=loop
+        "amqp://guest:guest@rabbit/", loop=loop
     )
 
     # Creating a channel
