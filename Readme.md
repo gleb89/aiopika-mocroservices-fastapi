@@ -1,21 +1,24 @@
 # aiopika
 
 ### Структура 
-    ├── fast отправляет слушателю
+    ├── service_produser отправляет слушателю
     |   ├── main.py
     |   ├── Dockerfile
-    ├── listen просто сервис
+    ├── service_consumer сервис слушатель
     |   ├── main.py
     |   ├── Dockerfile
-    ├── data
-    |   ├── nginx
-    |       └──app.conf
-    ├── cons слушатель
-    |   ├── cons.py
-    |   ├── Dockerfile
+    ├── data\nginx
+    |   └──app.conf
+    ├── .env     
     └─ docker-compose.yml
     
-    
+touch file .env
+
+
+        example
+        POSTGRES_USER=postgres
+        POSTGRES_PASSWORD=postgres
+        POSTGRES_DB=postgres
     
 Старт через docker-compose
    start the container:
