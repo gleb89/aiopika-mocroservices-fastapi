@@ -32,5 +32,5 @@ touch file .env
         
   Url
   
-      http://localhost:8080/listen/docs#/ -listen service
-      http://localhost:8080/fast/docs#/   fast service
+      [a link]http://localhost:8080/service_produser/docs#/ -listen service
+      [a link]http://localhost:8080/service_consumer/docs#/   fast service
