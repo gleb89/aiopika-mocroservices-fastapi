@@ -32,5 +32,5 @@ touch file .env
         
   Url
   
-      [a link]http://localhost:8080/service_produser/docs#/ -service produser
-      [a link]http://localhost:8080/service_consumer/docs#/   service consumer
+      http://localhost:8080/service_produser/docs#/ -service produser
+      http://localhost:8080/service_consumer/docs#/   service consumer
