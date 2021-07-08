@@ -22,6 +22,7 @@
    
         docker-compose up --build
         docker-compose up -d
+        docker-compose up -d consumer
         docker-compose -f docker-compose.yml logs -f
         
         
